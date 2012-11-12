@@ -1,0 +1,12 @@
+#value	P-assign	R-assign	F-assign	P-boundary	R-boundary	F-boundary
+"coordinations"	100.0	87.9	91.7	76.8	85.5	80.9
+"relative clauses"	100.0	93.0	96.4	88.5	91.3	89.8
+"appositions"	93.8	83.3	88.2	93.8	83.3	88.2
+"subordinate clauses"	100.0	96.8	98.4	100.0	96.8	98.4
+"introductory phrases"	100.0	95.9	97.9	97.1	95.8	96.5
+"parenthesised elements"	100.0	95.9	97.9	100.0	95.9	97.9
+
+#value	assign	boundary	assign	boundary	assign	boundary	assign	boundary	assign	boundary	assign	boundary
+#P	23.2	76.8	11.5	88.5	0	93.8	0	100	2.90000000000001	97.1	0	100
+#R	2.40000000000001	85.5	1.7	91.3	0	83.3	0	96.8	0.100000000000009	95.8	0	95.9
+#F	10.8	80.9	6.60000000000001	89.8	0	88.2	0	98.4	1.40000000000001	96.5	0	97.9
