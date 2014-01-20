@@ -1,0 +1,80 @@
+\documentclass[10pt]{article}
+
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{smartdiagram}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{center}
+\setlength\PreviewBorder{5pt}
+
+\begin{document}
+
+\begin{center}
+\smartdiagramset{bubble center node size/.initial={4cm}}
+\smartdiagram[bubble diagram]{
+iSimp,Coordinations,
+Relative\\clauses,
+Appositions,
+Subordinate\\clauses,
+Introductory\\phrases,
+Parenthesised\\elements
+}
+\end{center}
+
+\begin{center}
+
+\begin{tikzpicture}
+\footnotesize
+
+\definecolor{color1}{RGB}{0,84,150}
+\definecolor{color2}{RGB}{202,108,24}
+
+% center, radius, text 
+\newcommand{\primary}[3]{
+  \draw[align=center,thick] #1 node{#3};
+  \begin{pgfonlayer}{background}
+    \draw[ultra thick,
+	      draw=none,
+	      shade=ball,
+          circular drop shadow,
+	      fill opacity=.7,
+          ball color=color2!60!black] #1 circle (#2);
+  \end{pgfonlayer}
+}
+
+\newcommand{\secondary}[3]{
+  \draw[align=center] #1 node{#3};
+  \begin{pgfonlayer}{background}
+    \draw[ultra thick,
+	      draw=white,
+	      fill opacity=.7,
+          fill=color1!40] #1 circle (#2);
+  \end{pgfonlayer}
+}
+
+\tikzstyle{type}=[
+     ultra thick,
+     draw=white,
+     fill opacity=.7,
+     fill=color1,
+]
+
+
+\draw[align=center](0:0cm) node{iSimp};
+\begin{pgfonlayer}{background}
+  \draw[type,fill=gray!40,fill opacity=.7] (0:0cm) circle (2cm);
+\end{pgfonlayer}
+
+\primary{(0:3cm)}{1.5cm}{Coordinations}
+\primary{(70:2.9cm)}{1.3cm}{Relative\\clauses}
+\primary{(300:2.3cm)}{0.48cm}{Appositions}
+
+\secondary{(250:2.3cm)}{0.40cm}{Subordinate\\clauses}
+\secondary{(200:2.2cm)}{1.08cm}{Introductory\\phrases}
+\secondary{(135:2.6cm)}{1.29cm}{Parenthesised\\elements}
+
+\end{tikzpicture}
+\end{center}
+
+\end{document}

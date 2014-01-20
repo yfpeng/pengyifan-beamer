@@ -1,0 +1,214 @@
+\documentclass[10pt]{article}
+
+\usepackage{alltt}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%\usepackage{beamerprosper}
+\usepackage[english]{babel}
+\usepackage{booktabs}
+\usepackage{calc}
+\usepackage{colortbl}
+\usepackage{helvet}
+\usepackage{mathptmx}
+\usepackage{multirow}
+\usepackage{pgf}
+\usepackage{smartdiagram}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{xmpmulti}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{center}
+\setlength\PreviewBorder{5pt}
+
+\usetikzlibrary{%
+  arrows,%
+  automata,%
+  calc,%
+  trees,%
+  positioning,%
+  chains,%
+  shapes,%
+  shapes.arrows,%
+  shapes.geometric,%
+  shapes.misc,% wg. rounded rectangle
+  shapes.symbols,%
+  decorations.pathreplacing,%
+  decorations.pathmorphing,% /pgf/decoration/random steps | erste Graphik
+  matrix,%
+  scopes,%
+  shadows%
+ }
+ 
+\begin{document}
+
+\begin{center}
+\tikzstyle{module_text}=[
+  draw=none,
+  %minimum height=1.5cm,
+  minimum width=6cm,
+  inner sep=3pt,
+  text width=8.5cm,
+]
+
+\definecolor{green}{RGB}{0,176,80}
+\definecolor{blue}{RGB}{0,176,240}
+\definecolor{darkblue}{RGB}{46,117,182}
+\definecolor{yellow}{RGB}{255,192,0}
+\definecolor{brown}{RGB}{197,90,17}
+
+\newcommand{\subtext}[1]{$_{\text{#1}}$}
+\newcommand{\darkbluetext}[1]{\textcolor{darkblue}{\textbf{#1}}}
+\newcommand{\greentext}[1]{\textcolor{green}{\textbf{#1}}}
+
+\newcommand*{\xMin}{0}%
+\newcommand*{\xMax}{20}%
+\newcommand*{\yMin}{-15}%
+\newcommand*{\yMax}{0}%
+
+\newcommand{\drawtextbound}[3]{
+\draw[color=#1,line width=4pt, rounded corners=.5em] let 
+  \p1=#2,
+  \p2=#3 in
+  (\x1,\y1) -- (\x2,\y1) -- (\x2,\y2)[rounded corners=0] -- (\x1,\y2)[rounded corners=0] -- cycle;
+}
+
+\newcommand{\drawarrow}[4] {
+\draw[fill=#1,color=#1,line width=4pt] let 
+  \p1=#2,
+  \p2=#3 in
+  (\x1-6.5em,\y1-1pt) -- (\x1-3.5em,\y1-1em) -- (\x2-.5em,\y1-1pt) -- (\x2-.5em,\y2-1pt) -- (\x2-3.5em,\y2-1em) -- (\x1-6.5em,\y2-1pt) -- cycle;
+\draw let 
+  \p1=#2,
+  \p2=#3 in
+  ($(\x1-3.5em, \y1-.8em)+.5*(0,\y2)-.5*(0,\y1)$) node[draw=none,text=black]{
+  #4
+  };
+}
+\begin{tikzpicture}[x=1cm,y=1cm,>=stealth',node distance=.3cm]
+
+\node at (0,0) [
+  module_text,
+  anchor=north west
+] (sentence) {%
+  \begin{tabular}{ll}
+  $\bullet$ & \darkbluetext{PKC} \uwave{phosphorylates} \greentext{GAP-43} on serine 41.\\
+  $\bullet$ & It was suggested that \darkbluetext{Yak1} \uwave{phosphorylates} \\
+   & \greentext{Crf1} to promote its nuclear entry.
+  \end{tabular}
+};
+
+\node [
+  module_text,
+  below=of sentence.south west,
+  anchor=north west,
+] (pattern) {%
+  \begin{tabular}{ll}
+  $\bullet$ & \darkbluetext{Protein\subtext{kinase}} \uwave{phosphorylates}\\
+  $\bullet$ & \uwave{phosphorylates} \greentext{Protein\subtext{substrate}}
+  \end{tabular}
+};
+
+\node [
+  module_text,
+  below=of pattern.south west,
+  anchor=north west,
+] (result) {%
+  \begin{tabular}{lp{5em}l}
+  $\quad$ & \darkbluetext{Kinase} & \greentext{Substrate}\\
+  \cmidrule(rr){2-3}
+  & PKC & GAP-43\\
+  & Yak1 & Crf1
+  \end{tabular}
+};
+
+\drawtextbound{blue}{(sentence.north west)}{(sentence.south east)};
+\drawarrow{blue}{(sentence.north west)}{(sentence.south west)}{
+  \begin{tabular}{l}
+  \textbf{Sentence}
+  \end{tabular}%
+};
+
+\drawtextbound{yellow}{(pattern.north west)}{(pattern.south east)};
+\drawarrow{yellow}{(pattern.north west)}{(pattern.south west)}{
+  \begin{tabular}{l}
+  \textbf{Pattern}
+  \end{tabular}%
+};
+
+\drawtextbound{brown}{(result.north west)}{(result.south east)};
+\drawarrow{brown}{(result.north west)}{(result.south west)}{
+  \begin{tabular}{c}
+  \footnotesize
+  \textbf{Phosphorylation}\\
+  \textbf{Results}
+  \end{tabular}%
+};
+
+%\foreach \i in {\xMin,...,\xMax} {
+%	\draw [thin,gray] node [below] at (\i,\yMin) {$\i$};
+%}
+%\foreach \i in {\yMin,...,\yMax} {
+%  \draw [thin,gray] node [left] at (\xMin,\i) {$\i$};
+%}
+%
+%\draw[step=.5,gray,thin] (\xMin,\yMin) grid (\xMax,\yMax);
+
+\end{tikzpicture}
+\end{center}
+
+%----------------------------------------
+
+\begin{center}
+
+\begin{tikzpicture}
+
+\definecolor{color1}{RGB}{255,187,0}
+\definecolor{color2}{RGB}{150,211,51}
+\definecolor{color3}{RGB}{0,195,201}
+
+% center point, color left text, right text
+\newcommand{\oneblock}[4]{
+  \draw #1 node {
+  \begin{tikzpicture}[node distance=0em]
+  \node[draw=#2,
+        rounded corners,
+        line width=4pt,
+        inner sep=4pt,
+        text justified,
+        text width=.7\textwidth,
+        minimum height=4em](a) {#4};
+  \draw[fill=#2,draw=none]
+        let \p1=(a.north west), 
+            \p2=(a.south west),
+            \p3=(\x1+5pt,\y1),
+            \p4=(\x2+5pt,\y2) in
+        (\p3)--(\x3-3em,\y3-1.5em)--(\x3-6em,\y3)
+        --(\x4-6em,\y4)--(\x4-3em,\y4-1.5em)--(\p4)--cycle;
+  \node[right =of a.west,
+        xshift=-3em+5pt, 
+        yshift=-1em, 
+        anchor=center, 
+        align=center] {#3};
+  \end{tikzpicture}
+  };
+}
+
+\newcommand*{\entity}[1]{\textcolor{blue}{#1}}
+\oneblock{(0em,0em)}{color1}{Training set}{
+    $\bullet$ ~ \entity{PKC} \uwave{phosphorylates} \entity{GAP-43} on serine 41.\\
+    $\bullet$ ~ \entity{JNK} \uwave{phosphorylates} \entity{BAD} at threonine 201.\\
+    $\bullet$ ~ $\cdots$
+}
+\oneblock{(0em,-5em)}{color2}{Learned\\rules}{
+	\entity{A} \uwave{phosphorylates} \entity{B}, \\
+    when \entity{A} and \entity{B} are proteins
+}
+\oneblock{(0em,-10em)}{color3}{New Data}{
+	It was suggested that \entity{Yak1} \uwave{phosphorylates} \entity{Crf1} to promote its nuclear entry.
+}
+\end{tikzpicture}
+\end{center}
+
+\end{document}

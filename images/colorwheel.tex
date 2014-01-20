@@ -1,0 +1,90 @@
+\documentclass[10pt]{article}
+
+\usepackage[rgb]{xcolor}
+
+\usepackage{alltt}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%\usepackage{beamerprosper}
+\usepackage[english]{babel}
+\usepackage{booktabs}
+\usepackage{calc}
+\usepackage{colortbl}
+\usepackage{helvet}
+\usepackage{mathptmx}
+\usepackage{multirow}
+\usepackage{pgf}
+\usepackage{smartdiagram}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{xmpmulti}
+
+\usepackage[active,tightpage]{preview}
+\PreviewEnvironment{center}
+\setlength\PreviewBorder{5pt}
+
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\usetikzlibrary{%
+  arrows,%
+  automata,%
+  calc,%
+  trees,%
+  positioning,%
+  chains,%
+  shapes,%
+  shapes.arrows,%
+  shapes.geometric,%
+  shapes.misc,% wg. rounded rectangle
+  shapes.symbols,%
+  decorations.pathreplacing,%
+  decorations.pathmorphing,% /pgf/decoration/random steps | erste Graphik
+  matrix,%
+  scopes,%
+  shadows%
+ }
+ 
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}
+	\footnotesize
+	% Create the background in the circle, by drawing several slices
+	% each with a constant color given by the angle (which is converted
+	% to a color usin the hue, saturation and brightness color space).
+	\foreach \x in {0,0.0416,...,1} {
+	  \definecolor{currentcolor}{hsb}{\x, 1, 1}
+	  \draw[draw=none, fill=currentcolor]
+	    (-360*\x+88-7.5:0) -- (-360*\x+88-7.5:2.7)
+	    arc (-360*\x+88-7.5:-360*\x+88+7.5:2.7) -- cycle;
+	}
+	% Draw a circle with markings along the perimeter, indicating which angles
+	% the hue function connects to certain colors.
+	\draw (0, 0) circle (2.7);
+	\foreach \x  in {0, 30, ..., 330}
+	  \draw (-\x+90:2.8) -- (-\x+90:2.7) (-\x+90:3); % node {$\x^\circ$};
+	
+	% Add labels with names of the primary and secondary colors.
+	\foreach \x/\text in {%
+	  0/\begin{tabular}{c}Red\\255-0-0\end{tabular},
+	  60/\begin{tabular}{c}Yellow\\255-255-0\end{tabular},
+	  120/\begin{tabular}{c}Green\\0-255-0\end{tabular},
+	  180/\begin{tabular}{c}Cyan\\0-255-255\end{tabular},
+	  240/\begin{tabular}{c}Blue\\0-0-255\end{tabular},
+	  300/\begin{tabular}{c}Magenta\\255-0-255\end{tabular},
+	  %
+	  30/\begin{tabular}{c}Orange\\255-125-0\end{tabular},
+	  90/\begin{tabular}{c}Spring Green\\125-255-0\end{tabular},
+	  150/\begin{tabular}{c}Turquoise\\0-255-125\end{tabular},
+	  210/\begin{tabular}{c}Ocean\\0-125-255\end{tabular},
+	  270/\begin{tabular}{c}Violet\\125-0-255\end{tabular},
+	  330/\begin{tabular}{c}Raspberry\\255-0-125\end{tabular},
+	}
+	\draw (-\x+90:3.3) node {\text};
+\end{tikzpicture}
+\end{center}
+
+\end{document}
